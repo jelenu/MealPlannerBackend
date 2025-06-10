@@ -8,6 +8,7 @@ class LoginViewTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             email="email@test.com",
+            username="testuser",
             password="StrongPassword123!"
         )
         self.user.is_active = True
@@ -66,4 +67,3 @@ class LoginViewTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertIn("detail", response.data)
 
-        

@@ -12,6 +12,7 @@ class ActivateAccountViewTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             email="email@test.com",
+            username="testuser",
             password="StrongPassword123!",
             is_active=False 
         )
@@ -37,6 +38,5 @@ class ActivateAccountViewTests(APITestCase):
         self.user.save()
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn("error", response.data) 
+        self.assertIn("error", response.data)
 
-    

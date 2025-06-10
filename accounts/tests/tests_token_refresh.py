@@ -9,6 +9,7 @@ class TokenRefreshViewTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             email="test@email.com",
+            username="testuser",
             password="StrongPassword123!"
         )
         self.user.is_active = True
@@ -42,4 +43,3 @@ class TokenRefreshViewTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("refresh", response.data)
 
-        

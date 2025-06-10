@@ -9,6 +9,7 @@ class ChangePasswordTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             email="test@email.com",
+            username="testuser",
             password="StrongPassword123!"
         )
         self.user.is_active = True
@@ -74,32 +75,29 @@ class ChangePasswordTests(APITestCase):
     def test_change_password_missing_old_password(self):
         tokens = self.get_tokens_for_user()
         access_token = tokens['access']
-        
+
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + access_token)
-        
+
         data = {
             "new_password": "NewStrongPassword123!"
         }
-        
+
         response = self.client.post(self.change_password_url, data)
-        
+
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn("error", response.data)
+        self.assertIn("old_password", response.data)  # <-- Cambiado
 
     def test_change_password_missing_new_password(self):
         tokens = self.get_tokens_for_user()
         access_token = tokens['access']
-        
+
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + access_token)
-        
+
         data = {
             "old_password": "StrongPassword123!"
         }
-        
-        response = self.client.post(self.change_password_url, data)
-        
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn("error", response.data)
 
-        
-    
+        response = self.client.post(self.change_password_url, data)
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("new_password", response.data)  # <-- Cambiado
