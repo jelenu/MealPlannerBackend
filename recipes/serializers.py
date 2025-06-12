@@ -12,3 +12,10 @@ class FavoriteRecipeSerializer(serializers.ModelSerializer):
         model = FavoriteRecipe
         fields = ['id', 'uri', 'label', 'image', 'added_at']
         read_only_fields = ['id', 'added_at']
+
+    def validate(self, data):
+        user = self.context['request'].user
+        uri = data.get('uri')
+        if FavoriteRecipe.objects.filter(user=user, uri=uri).exists():
+            raise serializers.ValidationError({'uri': 'This recipe is already in your favorites.'})
+        return data
