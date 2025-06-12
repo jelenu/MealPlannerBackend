@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'drf_spectacular',
     
     'accounts',
-]
+    'recipes',
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
