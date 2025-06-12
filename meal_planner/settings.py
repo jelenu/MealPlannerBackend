@@ -139,3 +139,6 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Documentation for the AuthSystem API',
     'VERSION': '1.0.0',
 }
+
+EDAMAM_APP_ID = config('EDAMAM_APP_ID')
+EDAMAM_APP_KEY = config('EDAMAM_APP_KEY')

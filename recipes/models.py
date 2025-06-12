@@ -19,3 +19,16 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
+
+class FavoriteRecipe(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='favorite_recipes')
+    uri = models.CharField(max_length=255)
+    label = models.CharField(max_length=255, blank=True)  # opcional, para mostrar el nombre
+    image = models.URLField(blank=True)  # opcional, para mostrar la imagen
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'uri')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.label or self.uri}"
